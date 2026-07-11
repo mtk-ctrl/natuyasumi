@@ -4,56 +4,67 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#070714">
-  <meta name="description" content="指一本で夏の残響を操る、スマホ向けネオン・ローグライトゲーム。">
+  <meta name="description" content="8秒前の自分と共闘する、スマホ向けネオン・ローグライトシューティング。">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
-  <title>NATSU//ECHO</title>
+  <title>NATSU//ECHO OVERDRIVE</title>
 </head>
 <body>
   <canvas id="game" aria-label="NATSU ECHO game canvas"></canvas>
 
   <div id="hud" class="hidden" aria-live="polite">
     <div class="hud-top">
-      <div class="brand-mini">NATSU//ECHO</div>
+      <div>
+        <div class="brand-mini">NATSU//ECHO</div>
+        <div id="statusLine" class="status-line">NORMAL DRIVE</div>
+      </div>
       <button id="pauseBtn" class="icon-btn" aria-label="一時停止">Ⅱ</button>
     </div>
     <div class="stats">
       <div><span>SCORE</span><strong id="score">0</strong></div>
       <div><span>WAVE</span><strong id="wave">1</strong></div>
       <div><span>ECHO</span><strong id="echoCount">0/3</strong></div>
+      <div><span>LIFE</span><strong id="lifeCount">◆◆◆</strong></div>
+    </div>
+    <div id="bossWrap" class="boss-wrap hidden">
+      <div class="boss-label"><span>BONFIRE COLOSSUS</span><span id="bossPercent">100%</span></div>
+      <div class="boss-meter"><i id="bossBar"></i></div>
     </div>
     <div class="meter-wrap">
       <div class="meter-label"><span>SUMMER BURST</span><span id="burstPercent">0%</span></div>
       <div class="meter"><i id="burstBar"></i></div>
+      <div class="gesture-hint">満タンでダブルタップ / 素早いスワイプでDASH</div>
     </div>
   </div>
 
   <main id="menu" class="panel visible">
     <div class="eyebrow">ONE FINGER / ENDLESS SUMMER</div>
     <h1>NATSU<span>//</span>ECHO</h1>
-    <p class="lead">あなたの動きが8秒後、味方として帰ってくる。</p>
+    <div class="edition">OVERDRIVE EDITION</div>
+    <p class="lead">あなたの動きが8秒後、戦闘機になって帰ってくる。</p>
     <div class="howto">
-      <div><b>DRAG</b><span>指で光を導く</span></div>
-      <div><b>ECHO</b><span>過去の軌跡が攻撃する</span></div>
-      <div><b>DOUBLE TAP</b><span>満タンで夏を爆発させる</span></div>
+      <div><b>DRAG</b><span>戦闘機を導く</span></div>
+      <div><b>ECHO</b><span>過去の編隊と共闘</span></div>
+      <div><b>DOUBLE TAP</b><span>夏を爆発させる</span></div>
     </div>
-    <button id="startBtn" class="primary">夏を始める</button>
+    <button id="startBtn" class="primary">OVERDRIVE 起動</button>
     <div class="menu-row">
       <button id="soundBtn" class="secondary">音：ON</button>
       <button id="helpBtn" class="secondary">遊び方</button>
     </div>
     <p id="bestLine" class="best">BEST 0</p>
-    <p class="tiny">音あり推奨・イヤホンだと少し化けます</p>
+    <p class="tiny">音あり推奨。スマホ横持ちにも対応しています。</p>
   </main>
 
   <section id="help" class="panel">
     <div class="eyebrow">HOW TO PLAY</div>
-    <h2>未来の自分と共闘する</h2>
-    <p>画面を押したまま動かすと、光が指を追います。光は自動で敵を撃ちます。</p>
-    <p>8秒ごとに、その8秒間の動きを再現する「残響」が誕生。最大3体まで同時に戦います。</p>
-    <p>青い記憶を集めるとBURSTが上昇。100%で画面を素早く2回タップすると、敵弾を消しながら大ダメージ。</p>
-    <button id="helpClose" class="primary">わかった</button>
+    <h2>8秒前の自分と編隊を組む</h2>
+    <p>画面を押したまま指を動かすと戦闘機が追従し、敵へ自動射撃します。</p>
+    <p>8秒ごとに、その8秒間の動きを再現する「残響機」が誕生。最大3機が同時に戦います。</p>
+    <p>敵弾のすれすれを通るとGRAZE。ゲージ100%でダブルタップするとSUMMER BURSTを発動します。</p>
+    <p>短く素早くスワイプすると無敵DASH。5WAVEごとに巨大ボスが出現します。</p>
+    <button id="helpClose" class="primary">出撃準備完了</button>
   </section>
 
   <section id="upgrade" class="panel upgrade-panel">
@@ -65,7 +76,7 @@
   <section id="pause" class="panel compact">
     <div class="eyebrow">TIME FROZEN</div>
     <h2>一時停止</h2>
-    <button id="resumeBtn" class="primary">つづける</button>
+    <button id="resumeBtn" class="primary">戦闘へ戻る</button>
     <button id="quitBtn" class="secondary wide">タイトルへ戻る</button>
   </section>
 
@@ -87,6 +98,11 @@
   </section>
 
   <div id="toast" role="status"></div>
-  <script src="game.js" defer></script>
+  <script src="game-core.js" defer></script>
+  <script src="game-combat.js" defer></script>
+  <script src="game-update.js" defer></script>
+  <script src="game-render-world.js" defer></script>
+  <script src="game-render-actors.js" defer></script>
+  <script src="game-ui.js" defer></script>
 </body>
 </html>
