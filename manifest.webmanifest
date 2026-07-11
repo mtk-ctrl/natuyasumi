@@ -1,0 +1,13 @@
+{
+  "name": "NATSU//ECHO — ひと夏の残響",
+  "short_name": "NATSU//ECHO",
+  "description": "あなたの8秒前が味方になる、スマホ向けネオン・ローグライト。",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#05050e",
+  "theme_color": "#070714",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

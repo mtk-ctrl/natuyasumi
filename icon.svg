@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg"><stop stop-color="#252066"/><stop offset="1" stop-color="#05050e"/></radialGradient>
+    <filter id="g"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="104" fill="none" stroke="#5bf5ff" stroke-width="10" opacity=".35" filter="url(#g)"/>
+  <circle cx="256" cy="256" r="75" fill="none" stroke="#ff61d8" stroke-width="8" opacity=".55"/>
+  <path d="M256 116l30 110 110 30-110 30-30 110-30-110-110-30 110-30z" fill="#f8ffff"/>
+  <circle cx="256" cy="256" r="28" fill="#5bf5ff" filter="url(#g)"/>
+</svg>
